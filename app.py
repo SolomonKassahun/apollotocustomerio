@@ -19,9 +19,13 @@ def process_apollo_file(file):
         if missing:
             return None, f"Missing columns: {', '.join(missing)}"
 
+        df = df[df["Email"].notna() & (df["Email"].str.strip() != "")]
+        
+        df = df.drop_duplicates(subset=["Email"], keep="first")
+
         out_df = pd.DataFrame()
         out_df["id"] = df["Email"].apply(md5_hash)
-        out_df["created_at"] = int(time.time())  # current timestamp
+        out_df["created_at"] = int(time.time())  
         out_df["email"] = df["Email"]
         out_df["first_name"] = df["First Name"]
         out_df["last_name"] = df["Last Name"]
@@ -45,7 +49,7 @@ if uploaded_file:
         st.error(error)
     else:
         st.success("File processed successfully!")
-        st.write(f"✅ {len(out_df)} records converted")
+        st.write(f"✅ {len(out_df)} unique records converted")
         st.write(out_df.head())
 
         csv_data = out_df.to_csv(index=False).encode("utf-8")
