@@ -31,7 +31,7 @@ def process_apollo_file(file):
         out_df["last_name"] = df["Last Name"]
         out_df["city"] = df["City"]
         out_df["unsubscribed"] = False
-        out_df["plan_name"] = df["Company"]
+        out_df["plan_name"] = df["Company Name"]
         out_df["role"] = df["Title"]
 
         return out_df, None
