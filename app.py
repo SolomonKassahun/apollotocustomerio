@@ -14,7 +14,7 @@ def process_apollo_file(file):
     try:
         df = pd.read_csv(file)
 
-        required = ["First Name", "Last Name", "Email", "City", "Company", "Title"]
+        required = ["First Name", "Last Name", "Email", "City", "Company Name", "Title"]
         missing = [c for c in required if c not in df.columns]
         if missing:
             return None, f"Missing columns: {', '.join(missing)}"
